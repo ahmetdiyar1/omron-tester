@@ -1,26 +1,23 @@
 # Description
 
-This is the template project to easily get up and running with [scada.js](https://github.com/aktos-io/scada.js).
+This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to read and write values to/from Omron PLC's, with Hostlink protocol.
 
-# Live Demo
-
-This project can be seen in action at https://aktos.io/showcase
 
 # Install
 
 1. Install [Node.js](https://nodejs.org/en/download/)
 
-2. Install global dependencies (if you didn't already):
+2. Install global dependencies (as admin/root) (if you didn't already):
 
-       # npm install -g gulp yarn livescript@1.4.0
+       npm install -g gulp yarn livescript@1.4.0
 
 3. Download the project template, install project dependencies:
 
-       git clone https://github.com/aktos-io/scadajs-template myproject
-       cd myproject
+       git clone https://github.com/aktos-io/omron-tester
+       cd omron-tester
        git submodule update --init --recursive
        cd scada.js
-       yarn  # or `npm install`
+       npm install
 
 # Run
 
@@ -39,16 +36,21 @@ If you are on Linux, following commands will start everything needed for develop
 1. Start continuous build of webapp:
 
        cd scada.js
-       gulp --webapp showcase
+       gulp --webapp main
 
 2. Start webserver/dcsserver:
 
        cd servers
        ./run-ls webserver.ls
 
-3. Your webserver should [start on port 4001](./servers/configuration.ls). Open your web browser and go to [http://localhost:4001](http://localhost:4001). 
+3. Start Hostlink server:
 
-4. [Optional] If you want to monitor all messaging traffic, run monitor:
+       cd plc
+       ./run-ls hostlink-over-tcp.ls
+
+4. Open your web browser and go to [http://localhost:4001](http://localhost:4001).
+
+5. [Optional] If you want to monitor all messaging traffic, run monitor:
 
         cd servers
         ./run-ls monitor.ls
