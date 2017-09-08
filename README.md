@@ -50,7 +50,7 @@ If you are on Linux, following commands will start everything needed for develop
 
 4. Open your web browser and go to [http://localhost:4001](http://localhost:4001).
 
-5. [Optional] If you want to monitor all messaging traffic, run monitor:
+5. *Optional:* If you want to monitor all messaging traffic, run monitor:
 
         cd servers
         ./run-ls monitor.ls
