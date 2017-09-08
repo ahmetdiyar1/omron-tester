@@ -2,6 +2,9 @@
 
 This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to read and write values to/from Omron PLC's, with Hostlink protocol.
 
+# Screenshot 
+
+![image](https://user-images.githubusercontent.com/6639874/30219707-96bc706c-94c5-11e7-9c6f-ad0d74411eb9.png)
 
 # Install
 
@@ -50,7 +53,7 @@ If you are on Linux, following commands will start everything needed for develop
 
 4. Open your web browser and go to [http://localhost:4001](http://localhost:4001).
 
-5. [Optional] If you want to monitor all messaging traffic, run monitor:
+5. *Optional:* If you want to monitor all messaging traffic, run monitor:
 
         cd servers
         ./run-ls monitor.ls
