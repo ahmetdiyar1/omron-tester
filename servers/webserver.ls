@@ -16,7 +16,7 @@ app.use (req, res, next) ->
         next!
 
 console.log "serving static folder: /"
-app.use "/", express.static path.resolve "#{pub-dir}/showcase"
+app.use "/", express.static path.resolve "#{pub-dir}/pug-ls"
 
 http.listen webserver-port, ->
     console.log "listening on *:#{webserver-port}"

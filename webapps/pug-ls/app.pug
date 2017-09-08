@@ -1,12 +1,38 @@
-h2.ui.centered.header Hello {{name}}!
+//- Required components 
+logger(curr="{{ currentPage }}")
+aktos-dcs(transport-id="{{dcs.transportId}}")
 
-.ui.segment
-    | You can use Ractive here. Type your name 
-    .ui.input: input(value="{{name}}" placeholder="here")
 
-p
-    i.large.icon.dashboard     
-    | Any built-in components (look at scada.js/components) will also work as usual
+h2.ui.centered.top.attached.block.header Hello Omron!
+.ui.top.attached.segment 
+    .ui.form 
+        .fields
+            .field 
+                label Address 
+                input(value="{{address}}")
 
-slider(inline value="{{x}}")
-progress(type="circle" value="{{x}}")
+            .field 
+                label Value to write 
+                input(value="{{state}}")
+                    
+            .field
+                label button 
+                ack-button(on-buttonclick="toggleRelay") Send Value
+
+        .fields
+            .field 
+                label Address 
+                input(value="{{address}}")
+
+            .field 
+                label size
+                input(value="{{size}}")
+        
+            .field
+                label button 
+                ack-button(on-buttonclick="read") Read
+                
+            .field 
+                label Read Response 
+                textarea(value="{{readResponse}}")
+    
