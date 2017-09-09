@@ -1,6 +1,6 @@
 # Description
 
-This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to read and write values to/from Omron PLC's, with Hostlink protocol.
+This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to read and write values from/to Omron PLC's, with Hostlink protocol.
 
 # Screenshot 
 
@@ -10,9 +10,9 @@ This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to
 
 1. Install [Node.js](https://nodejs.org/en/download/)
 
-2. Install global dependencies (as admin/root) (if you didn't already):
+2. Install global dependencies (**as admin/root**):
 
-       npm install -g gulp yarn livescript@1.4.0
+       npm install -g gulp livescript@1.4.0
 
 3. Download the project template, install project dependencies:
 
@@ -24,13 +24,13 @@ This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to
 
 # Run
 
-If you are on Linux, following commands will start everything needed for development:
+If you are on Linux, following commands will be enough to start everything needed for development:
 
-1. On first terminal:
+1. On the first terminal:
 
        ./uidev.service
 
-2. On second terminal:
+2. On the second terminal:
 
        ./server.service
 
@@ -46,7 +46,7 @@ If you are on Linux, following commands will start everything needed for develop
        cd servers
        ./run-ls webserver.ls
 
-3. Start Hostlink server:
+3. Start Hostlink Gateway:
 
        cd plc
        ./run-ls hostlink-over-tcp.ls
