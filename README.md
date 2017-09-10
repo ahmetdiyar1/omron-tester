@@ -51,7 +51,7 @@ If you are on Linux, following commands will be enough to start everything neede
        cd plc
        ./run-ls hostlink-over-tcp.ls
 
-4. Open your web browser and go to [http://localhost:4001](http://localhost:4001).
+4. Open your web browser and go to http://localhost:4011
 
 5. *Optional:* If you want to monitor all messaging traffic, run monitor:
 
