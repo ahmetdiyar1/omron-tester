@@ -10,7 +10,7 @@ server = net.create-server (socket) ->
     connector = new OmronProtocolActor protocol, do
         subscribe: 'public.**'
 
-    connector.on \end, ~>
+    transport.on \end, ~>
         connector.kill!
 
 server.listen 2000, '0.0.0.0', ~>
