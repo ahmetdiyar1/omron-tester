@@ -1,5 +1,5 @@
 require! 'dcs': {Actor, TCPProxyClient}
-require! 'dcs/protocols/omron/hostlink': {HostlinkTcpServer}
+require! 'dcs/connectors/omron/hostlink': {HostlinkTcpServer}
 require! '../config': {dcs-port}
 
 new HostlinkTcpServer!
