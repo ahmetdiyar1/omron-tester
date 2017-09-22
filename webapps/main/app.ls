@@ -1,16 +1,29 @@
 require! components
-require! 'actors': {RactiveActor}
 
 new Ractive do
     el: \body
     template: RACTIVE_PREPARSE('app.pug')
     onrender: ->
-        actor = new RactiveActor this, 'main'
         @on do
-            toggleRelay: (ctx) ->
+            toggleValue: (ctx) ->
                 ctx.component.fire \state, \doing
-                actor.log.log "sending relay request..."
-                timeout, msg <~ actor.send-request {topic: 'public.x', timeout: 2000ms}, do
+
+                err, res <~ ctx.actor.send-request {topic: 'public.x', timeout: 2000ms}, do
+                    write:
+                        addr: @get \address
+                        data: if @get \boolstate => 1 else 0 
+
+                unless err
+                    @toggle \boolstate
+                    ctx.component.fire \state, \done...
+                else
+                    ctx.component.error "Request timed out."
+
+
+            write: (ctx) ->
+                ctx.component.fire \state, \doing
+                ctx.actor.log.log "sending relay request..."
+                timeout, msg <~ ctx.actor.send-request {topic: 'public.x', timeout: 2000ms}, do
                     write:
                         addr: @get \address
                         data: [@get \state]
@@ -23,8 +36,8 @@ new Ractive do
 
             read: (ctx) ->
                 ctx.component.fire \state, \doing
-                actor.log.log "sending read request..."
-                timeout, msg <~ actor.send-request {topic: 'public.x', timeout: 2000ms}, do
+                ctx.actor.log.log "sending read request..."
+                timeout, msg <~ ctx.actor.send-request {topic: 'public.x', timeout: 2000ms}, do
                     read:
                         addr: @get \address
                         size: [@get \size]
@@ -43,3 +56,4 @@ new Ractive do
         address: 'R92'
         size: 1
         readResponse: ''
+        boolstate: 0

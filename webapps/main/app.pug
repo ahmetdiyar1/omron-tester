@@ -17,7 +17,11 @@ h2.ui.centered.top.attached.block.header Hello Omron!
                     
             .field
                 label button 
-                ack-button(on-buttonclick="toggleRelay") Send Value
+                ack-button(on-buttonclick="write") Send Value
+
+            .field
+                label toggle 
+                ack-button(on-buttonclick="toggleValue") Toggle Value ({{boolstate}})
 
         .fields
             .field 
