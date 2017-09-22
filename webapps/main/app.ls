@@ -1,5 +1,5 @@
 require! components
-require! 'dcs/browser': {RactiveActor}
+require! 'actors': {RactiveActor}
 
 new Ractive do
     el: \body
