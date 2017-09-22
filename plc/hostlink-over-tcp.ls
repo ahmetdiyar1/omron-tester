@@ -7,8 +7,11 @@ require! 'net'
 server = net.create-server (socket) ->
     transport = socket
     protocol = new HostlinkProtocol transport
-    new OmronProtocolActor protocol, do
+    connector = new OmronProtocolActor protocol, do
         subscribe: 'public.**'
+
+    connector.on \end, ~>
+        connector.kill!
 
 server.listen 2000, '0.0.0.0', ~>
     console.log "Hostlink Server started listening on port: 2000"
