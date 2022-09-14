@@ -1,45 +1,34 @@
-require! <[ fs path express ]>
+require! \path
+require! \express
+require! 'dcs/services/dcs-proxy': {AuthDB, DcsSocketIOServer, DcsTcpServer}
+
+# configuration
 require! '../config': {webserver-port, dcs-port}
-require! 'dcs': {TCPProxyServer}
-require! 'dcs/browser': {SocketIOServer}
-require! './auth-db': {db}
+require! 'yargs': {argv}
 
+if argv.development
+    console.log "Using development site-root."
+    site-root = "../scada.js/build/main"
+else if argv.production
+    console.log "Using production site-root."
+    site-root = "../scada.js/release/main"
+else
+    console.error "Use a --development or --production argument."
+    process.exit 1
 
-# -----------------------------------------------------------------------------
-# Webserver
-# -----------------------------------------------------------------------------
-
-pub-dir = "#{__dirname}/../scada.js/build/"
+# Create a webserver
 app = express!
 http = require \http .Server app
+app.use "/", express.static path.resolve site-root
+http.listen webserver-port, "0.0.0.0", ->
+    console.log "webserver is listening on *:#{webserver-port}"
 
-# for debugging purposes, print out what is requested
-app.use (req, res, next) ->
-        filename = path.basename req.url
-        extension = path.extname filename
-        #console.log "File: #{filename} was requested."
-        next!
+# Create auth db
+db = new AuthDB (require './users' .users)
+# use ..update(users) to add more users in the runtime
 
-console.log "serving static folder: /"
-app.use "/", express.static path.resolve "#{pub-dir}/main"
+# Create a SocketIO bridge
+new DcsSocketIOServer http, {db}
 
-http.listen webserver-port, ->
-    console.log "listening on *:#{webserver-port}"
-
-process.on 'SIGINT', ->
-    console.log 'Received SIGINT, cleaning up...'
-    process.exit 0
-
-
-# -----------------------------------------------------------------------------
-# DCS
-# -----------------------------------------------------------------------------
-
-# create socket.io server
-new SocketIOServer http, do
-    db: db
-
-# start a TCP Proxy to share messages over dcs network
-new TCPProxyServer do
-    db: db
-    port: dcs-port
+# Create a TCP DCS Service
+new DcsTcpServer {port: dcs-port, db}

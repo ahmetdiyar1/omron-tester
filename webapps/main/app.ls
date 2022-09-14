@@ -1,59 +1,62 @@
-require! components
-
-new Ractive do
-    el: \body
-    template: RACTIVE_PREPARSE('app.pug')
-    onrender: ->
-        @on do
-            toggleValue: (ctx) ->
-                ctx.component.fire \state, \doing
-
-                err, res <~ ctx.actor.send-request {topic: 'public.x', timeout: 2000ms}, do
-                    write:
-                        addr: @get \address
-                        data: if @get \boolstate => 1 else 0 
-
-                unless err
-                    @toggle \boolstate
-                    ctx.component.fire \state, \done...
-                else
-                    ctx.component.error "Request timed out."
 
 
-            write: (ctx) ->
-                ctx.component.fire \state, \doing
-                ctx.actor.log.log "sending relay request..."
-                timeout, msg <~ ctx.actor.send-request {topic: 'public.x', timeout: 2000ms}, do
-                    write:
-                        addr: @get \address
-                        data: [@get \state]
+require! 'app/tools'
+<~ getDep "css/vendor2.css"
+<~ getDep "js/vendor2.js"
 
-                if timeout
-                    ctx.component.error "Request timed out."
-                    return
+try
+    require! 'aea/defaults'
+    require! 'components'
 
-                ctx.component.fire \state, \done...
+    new Ractive do
+        el: \body
+        template: require('./app.pug')
+        onrender: ->
+            @on do
+                toggleValue: (ctx) ->>
+                    btn = ctx.component 
 
-            read: (ctx) ->
-                ctx.component.fire \state, \doing
-                ctx.actor.log.log "sending read request..."
-                timeout, msg <~ ctx.actor.send-request {topic: 'public.x', timeout: 2000ms}, do
-                    read:
-                        addr: @get \address
-                        size: [@get \size]
+                    try 
+                        btn.state \doing
+                        msg = await ctx.actor.send-request {topic: 'my1.write', timeout: 2000ms}
+                            , [@get(\address), (if @get \boolstate => 1 else 0)]
 
-                if timeout
-                    ctx.component.error "Request timed out."
-                    return
-
-                @set \readResponse, JSON.stringify msg.payload.res, null, 2
-
-                ctx.component.fire \state, \done...
+                        throw new Error that if msg.data.err
+                        @toggle \boolstate
+                        btn.state \done...
+                    catch
+                        btn.error JSON.stringify e 
 
 
-    data:
-        state: 1
-        address: 'R92'
-        size: 1
-        readResponse: ''
-        boolstate: 0
+                write: (ctx) ->>
+                    btn = ctx.component 
+                    try 
+                        btn.state \doing
+                        msg = await ctx.actor.send-request {topic: 'my1.write', timeout: 2000ms}
+                            , [@get(\address), +(@get \state)]
+
+                        throw new Error that if msg.data.err
+                        btn.state \done...
+                    catch
+                        btn.error JSON.stringify e 
+
+                read: (ctx) ->>
+                    btn = ctx.component 
+                    try 
+                        btn.state \doing
+                        msg = await ctx.actor.send-request {topic: 'my1.read', timeout: 2000ms}
+                            , [@get(\address), +(@get \size)]
+
+                        throw new Error that if msg.data.err
+                        @set \readResponse, JSON.stringify msg.data.res, null, 2
+                        btn.state \done...
+                    catch
+                        btn.error JSON.stringify e 
+
+        data:
+            state: 1
+            address: 'D0'
+            size: 1
+            readResponse: ''
+            boolstate: 0
+

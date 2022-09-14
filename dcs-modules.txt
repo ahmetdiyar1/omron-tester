@@ -1,0 +1,12 @@
+yes	./
+yes	./lib/dcs/services/dcs-proxy/socket-io/
+yes	./lib/dcs/
+yes	./lib/dcs/drivers/omron/fins/
+yes	./lib/dcs/transports/tcp/
+no	./lib/dcs/transports/serial-port/
+no	./tools/debug-ls/
+no	./lib/dcs/services/couch-dcs/
+no	./lib/dcs/drivers/siemens/s7/
+no	./lib/dcs/drivers/rpi/
+no	./lib/dcs/connectors/siemens/nodeS7/
+no	./desktop/

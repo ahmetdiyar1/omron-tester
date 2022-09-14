@@ -17,11 +17,11 @@ h2.ui.centered.top.attached.block.header Hello Omron!
                     
             .field
                 label button 
-                ack-button(on-buttonclick="write") Send Value
+                ack-button(on-click="write") Send Value
 
             .field
                 label toggle 
-                ack-button(on-buttonclick="toggleValue") Toggle Value ({{boolstate}})
+                ack-button(on-click="toggleValue") Toggle Value ({{boolstate}})
 
         .fields
             .field 
@@ -34,9 +34,26 @@ h2.ui.centered.top.attached.block.header Hello Omron!
         
             .field
                 label button 
-                ack-button(on-buttonclick="read") Read
+                ack-button(on-click="read") Read
                 
             .field 
                 label Read Response 
                 textarea(value="{{readResponse}}")
     
+
+
+.ui.segment
+    pre.
+        MemoryAreas = {
+            'E'  : 0xA0,//Extended Memories
+            'C'  : 0xB0,//CIO
+            'CB' : 0x30,//CIO reading in bit
+            'W'  : 0xB1,//Work Area
+            'WB' : 0x31,//Work Area reading in bit
+            'H'  : 0xB2,//Holding Bit
+            'HB' : 0x32,//Holding Bit reading in bit
+            'A'  : 0xB3,//Auxiliary Bit
+            'AB' : 0x33,//Auxiliary Bit reading in bit
+            'D'  : 0x82,//Data Memories
+            'DM' : 0x02//Data Memories reading in bit
+        }

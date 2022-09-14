@@ -1,5 +1,5 @@
 require! 'dcs': {Actor, sleep, TCPProxyClient}
-require! 'dcs/connectors/omron': {OmronProtocolActor, HostlinkProtocol}
+require! 'dcs/drivers/omron': {OmronProtocolActor, HostlinkProtocol}
 require! '../config': {dcs-port}
 require! 'net'
 
