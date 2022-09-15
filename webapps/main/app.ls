@@ -15,7 +15,6 @@ try
         onrender: ->
             actor = new Actor
             actor.on-topic 'my1.read.CB0:0', (msg) ~>>
-                PNotify.info text: JSON.stringify(msg)
                 @set 'input_0', +(msg.data)
 
             @on do
