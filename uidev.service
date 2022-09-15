@@ -13,4 +13,4 @@ tmux setenv -t $session_name 'SCADAJS_VENV_PATH' "$SCADAJS_VENV_PATH"
 # run commands in tmux session
 run-in-tmux './scada.js/venv' "cd scada.js" "export APP=main" "make development"
 run-in-tmux './scada.js/venv' "cd servers" './run-ls webserver.ls --development'
-run-in-tmux "cd plc" "./run-ls hostlink-over-tcp.ls"
+run-in-tmux "cd plc" "./run-ls omron-fins-server.ls"

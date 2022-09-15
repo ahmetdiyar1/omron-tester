@@ -7,11 +7,17 @@ require! 'app/tools'
 try
     require! 'aea/defaults'
     require! 'components'
+    require! 'dcs': {Actor}
 
     new Ractive do
         el: \body
         template: require('./app.pug')
         onrender: ->
+            actor = new Actor
+            actor.on-topic 'my1.read.CB0:0', (msg) ~>>
+                PNotify.info text: JSON.stringify(msg)
+                @set 'input_0', +(msg.data)
+
             @on do
                 toggleValue: (ctx) ->>
                     btn = ctx.component 
@@ -59,4 +65,5 @@ try
             size: 1
             readResponse: ''
             boolstate: 0
+            input_0: 0
 
