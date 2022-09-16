@@ -19,9 +19,9 @@ h2.ui.centered.top.attached.block.header Hello Omron!
                 label button 
                 ack-button(on-click="write") Send Value
 
-            .field
-                label toggle 
-                ack-button(on-click="toggleValue") Toggle Value ({{boolstate}})
+        .field
+            label toggle 
+            ack-button(on-click="toggleValue") Toggle Value ({{boolstate}})
 
         .fields
             .field 
@@ -41,8 +41,9 @@ h2.ui.centered.top.attached.block.header Hello Omron!
                 textarea(value="{{readResponse}}")
 
         .field
-            label: code CB0:0
-            .ui.label(class="{{#if input_0}}green{{else}}red{{/if}}") Input 0
+            label: code CB0:0 {{input_count}}
+            .ui.label(class="{{#if input_0}}green{{else}}red{{/if}}") Input 0 
+            .ui.big.tag.label("{{#if input_count >= 4}}class='blue'{{/if}}") Ürün sayısı: {{input_count}}
     
 
 

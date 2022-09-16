@@ -16,6 +16,16 @@ try
             actor = new Actor
             actor.on-topic 'my1.read.CB0:0', (msg) ~>>
                 @set 'input_0', +(msg.data)
+                if +(msg.data)
+                    curr = @get 'input_count'
+                    @set 'input_count', ++curr
+
+                if curr is 2
+                    actor.send-request 'my1.write', ["CB100:1", 1]
+
+                if curr is 5
+                    actor.send-request 'my1.write', ["CB100:1", 0]
+
 
             @on do
                 toggleValue: (ctx) ->>
@@ -65,4 +75,5 @@ try
             readResponse: ''
             boolstate: 0
             input_0: 0
+            input_count: 0
 
