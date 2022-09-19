@@ -6,54 +6,27 @@ This is an example project of [ScadaJS](https://github.com/aktos-io/scada.js) to
 
 ![image](https://user-images.githubusercontent.com/6639874/30219707-96bc706c-94c5-11e7-9c6f-ad0d74411eb9.png)
 
-# Install
+# Development
 
-1. Install [Node.js](https://nodejs.org/en/download/)
+### 1. Clone this repo and install its dependencies
 
-2. Install global dependencies (**as admin/root**):
+> Windows users: Follow [these instructions](https://github.com/aktos-io/scada.js/blob/1f63386332ea55f911ea687c9e8c7080c0f6c904/doc/on-windows/README.md) first.
 
-       npm install -g gulp livescript@1.4.0
+1. Open a terminal window (Windows users: right click, click "Open MSYS2 here")
+2. `git clone --recursive https://github.com/aktos-io/omron-tester`
+3. `cd omron-tester`
+4. Create a virtual environment: `make create-virtual-env`
+5. `make install-deps`
 
-3. Download the project template, install project dependencies:
+### 2. Build 
 
-       git clone https://github.com/aktos-io/omron-tester
-       cd omron-tester
-       git submodule update --init --recursive
-       cd scada.js
-       npm install
+1. `make development` will start necessary services. 
+2. Go to http://localhost:4011
+3. Use your favourite text editor for editing files. Use `Ctrl+b, n` and `Ctrl+b, p` to navigate between Tmux tabs. 
 
-# Run
+### 3. Release 
 
-If you are on Linux, following commands will be enough to start everything needed for development:
+1. `make release`. 
+2. Run: `./production.service` (look into the script, it's self documentary)
+3. Go to http://localhost:4011
 
-1. On the first terminal:
-
-       ./uidev.service
-
-2. On the second terminal:
-
-       ./server.service
-
-### The Manual Way
-
-1. Start continuous build of webapp:
-
-       cd scada.js
-       gulp --webapp main
-
-2. Start webserver/dcsserver:
-
-       cd servers
-       ./run-ls webserver.ls
-
-3. Start Hostlink Gateway:
-
-       cd plc
-       ./run-ls hostlink-over-tcp.ls
-
-4. Open your web browser and go to http://localhost:4011
-
-5. *Optional:* If you want to monitor all messaging traffic, run monitor:
-
-        cd servers
-        ./run-ls monitor.ls
