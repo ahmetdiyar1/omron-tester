@@ -30,7 +30,7 @@ class OmronFinsActor extends Actor
         val0 = 0
         while true
             try 
-                res = await @driver.exec 'read', 'CB0:0', 1
+                res = await @driver.exec 'read', 'D16:0', 1
                 val = res.values.0
                 if val0 isnt val 
                     @log.log "Value changed:", val
